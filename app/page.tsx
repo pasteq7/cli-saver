@@ -1,10 +1,9 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
-import { CommandList } from "@/components/command-list"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { AuthButton } from "@/components/auth-button"
 import { SignIn } from "@/components/sign-in"
-import { CommandSearch } from "@/components/command-search"
+import { CommandSection } from "@/components/command-section"
 
 export default async function Home() {
   const supabase = createServerComponentClient({ cookies })
@@ -34,13 +33,7 @@ export default async function Home() {
       </header>
 
       {session ? (
-        <>
-          <CommandSearch 
-            onSearch={() => {}}
-            onAdd={() => {}}
-          />
-          <CommandList commands={commands || []} />
-        </>
+        <CommandSection initialCommands={commands || []} />
       ) : (
         <SignIn />
       )}
