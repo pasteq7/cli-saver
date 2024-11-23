@@ -53,12 +53,14 @@ export function AuthButton() {
 
   const handleSignOut = async () => {
     try {
-      await supabase.auth.signOut()
-      setIsAuthenticated(false)
+      setIsAuthenticated(false) // Set state immediately
+      const { error } = await supabase.auth.signOut()
+      if (error) throw error
       router.refresh()
+      router.push('/') // Redirect to home page after sign out
     } catch (error) {
       console.error('Error signing out:', error)
-      // toast.error('Failed to sign out') // toast is not defined, consider importing or defining it
+      setIsAuthenticated(true) // Revert state if error
     }
   }
 
