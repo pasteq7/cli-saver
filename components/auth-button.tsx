@@ -18,8 +18,8 @@ export function AuthButton() {
     }
     checkAuth()
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      setIsAuthenticated(event === 'SIGNED_IN')
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setIsAuthenticated(!!session)
     })
 
     return () => {
