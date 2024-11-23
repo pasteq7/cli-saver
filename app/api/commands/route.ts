@@ -23,6 +23,12 @@ export async function POST(request: Request) {
     }
 
     // Insert the command into the database
+    console.log('Attempting to insert command:', {
+      command,
+      description: description || null,
+      user_id: session.user.id,
+    });
+    
     const { data, error } = await supabase
       .from("commands")
       .insert({
@@ -33,7 +39,12 @@ export async function POST(request: Request) {
       .select()
 
     if (error) {
-      console.error("Database error:", error)
+      console.error("Database error details:", {
+        message: error.message,
+        code: error.code,
+        details: error.details,
+        hint: error.hint
+      })
       return NextResponse.json(
         { error: error.message },
         { status: 500 }
