@@ -13,14 +13,14 @@ export function AuthButton() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { user }, error } = await supabase.auth.getUser()
+      const { data: { user } } = await supabase.auth.getUser()
       setIsAuthenticated(!!user)
     }
     checkAuth()
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event) => {
       if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
-        const { data: { user }, error } = await supabase.auth.getUser()
+        const { data: { user } } = await supabase.auth.getUser()
         setIsAuthenticated(!!user)
       }
     })
