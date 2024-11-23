@@ -28,14 +28,10 @@ export function AuthButton() {
   }, [supabase.auth])
 
   const handleSignIn = async () => {
-    const redirectTo = process.env.NEXT_PUBLIC_SITE_URL 
-      ? `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`
-      : `${window.location.origin}/auth/callback`
-
     await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
-        redirectTo,
+        redirectTo: `${location.origin}/auth/callback`,
       },
     })
   }
