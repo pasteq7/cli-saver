@@ -27,15 +27,28 @@ export async function POST(request: Request) {
       .from("commands")
       .insert({
         command,
-        description,
+        description: description || null,
         user_id: session.user.id,
       })
       .select()
-      .single()
 
-    if (error) throw error
+    if (error) {
+      console.error("Database error:", error)
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 }
+      )
+    }
 
-    return NextResponse.json(data)
+    if (!data || data.length === 0) {
+      console.error("No data returned from insert")
+      return NextResponse.json(
+        { error: "Failed to create command - no data returned" },
+        { status: 500 }
+      )
+    }
+
+    return NextResponse.json(data[0])
   } catch (error) {
     console.error("Error creating command:", error)
     return NextResponse.json(
