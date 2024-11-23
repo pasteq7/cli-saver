@@ -3,7 +3,6 @@ CREATE TABLE IF NOT EXISTS public.commands (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     user_id UUID NOT NULL,
     command TEXT NOT NULL,
-    description TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
     FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
 );

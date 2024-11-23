@@ -16,16 +16,14 @@ interface CommandDialogProps {
 export function CommandDialog({ onSave }: CommandDialogProps) {
   const [open, setOpen] = useState(false)
   const [command, setCommand] = useState("")
-  const [description, setDescription] = useState("")
+
 
   const handleSave = () => {
     onSave({
       command,
-      description: description || undefined,
     })
     setOpen(false)
     setCommand("")
-    setDescription("")
   }
 
   return (
@@ -48,15 +46,6 @@ export function CommandDialog({ onSave }: CommandDialogProps) {
               value={command}
               onChange={(e) => setCommand(e.target.value)}
               placeholder="git commit -m 'feat: add new feature'"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="description">Description (optional)</Label>
-            <Textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Creates a commit with a conventional commit message"
             />
           </div>
           <Button onClick={handleSave} disabled={!command.trim()}>

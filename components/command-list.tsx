@@ -27,11 +27,6 @@ export function CommandList({ commands, onDelete }: CommandListProps) {
                 <pre className="font-mono text-sm bg-muted p-2 rounded-md overflow-x-auto">
                   {command.command}
                 </pre>
-                {command.description && (
-                  <p className="text-sm text-muted-foreground mt-2">
-                    {command.description}
-                  </p>
-                )}
               </div>
               <div className="flex gap-2">
                 <Button

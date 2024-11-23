@@ -21,8 +21,7 @@ export function CommandSection({ initialCommands }: CommandSectionProps) {
     }
     
     const filtered = initialCommands.filter(command => 
-      command.command.toLowerCase().includes(query.toLowerCase()) ||
-      command.description?.toLowerCase().includes(query.toLowerCase())
+      command.command.toLowerCase().includes(query.toLowerCase()) 
     )
     setCommands(filtered)
   }
@@ -33,7 +32,6 @@ export function CommandSection({ initialCommands }: CommandSectionProps) {
       id: crypto.randomUUID(),
       user_id: "temp",
       command: newCommand.command!,
-      description: newCommand.description,
       created_at: new Date().toISOString(),
     }
     
