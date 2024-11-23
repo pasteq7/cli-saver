@@ -68,3 +68,33 @@ export async function POST(request: Request) {
     )
   }
 }
+
+export async function GET() {
+  const supabase = createRouteHandlerClient({ cookies })
+  
+  // Check if user is authenticated
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("commands")
+      .select("*")
+      .order('created_at', { ascending: false })
+
+    if (error) {
+      console.error("Database error:", error)
+      return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+
+    return NextResponse.json(data)
+  } catch (error) {
+    console.error("Error fetching commands:", error)
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    )
+  }
+}
