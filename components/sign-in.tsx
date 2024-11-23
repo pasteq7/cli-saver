@@ -2,19 +2,10 @@
 
 import { Button } from "@/components/ui/button"
 import { LogIn } from "lucide-react"
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { useAuth } from "@/components/auth-provider"
 
 export function SignIn() {
-  const supabase = createClientComponentClient()
-
-  const handleSignIn = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "github",
-      options: {
-        redirectTo: `${location.origin}/auth/callback`,
-      },
-    })
-  }
+  const { signInWithGithub } = useAuth()
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
@@ -24,7 +15,7 @@ export function SignIn() {
       <p className="text-muted-foreground text-center max-w-md">
         Sign in with GitHub to start saving your frequently used commands and access them from anywhere.
       </p>
-      <Button onClick={handleSignIn}>
+      <Button onClick={signInWithGithub}>
         <LogIn className="h-4 w-4 mr-2" />
         Sign in with GitHub
       </Button>
