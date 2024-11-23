@@ -2,15 +2,16 @@
 
 import { Command } from "@/lib/types"
 import { Card, CardContent } from "./ui/card"
-import { Copy } from "lucide-react"
+import { Copy, Trash2 } from "lucide-react"
 import { Button } from "./ui/button"
 import { toast } from "sonner"
 
 interface CommandListProps {
   commands: Command[]
+  onDelete?: (id: string) => void
 }
 
-export function CommandList({ commands }: CommandListProps) {
+export function CommandList({ commands, onDelete }: CommandListProps) {
   const copyToClipboard = async (text: string) => {
     await navigator.clipboard.writeText(text)
     toast.success("Command copied to clipboard")
@@ -32,13 +33,27 @@ export function CommandList({ commands }: CommandListProps) {
                   </p>
                 )}
               </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => copyToClipboard(command.command)}
-              >
-                <Copy className="h-4 w-4" />
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => copyToClipboard(command.command)}
+                  title="Copy command"
+                >
+                  <Copy className="h-4 w-4" />
+                </Button>
+                {onDelete && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => onDelete(command.id)}
+                    className="text-destructive hover:text-destructive"
+                    title="Delete command"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
             </div>
           </CardContent>
         </Card>

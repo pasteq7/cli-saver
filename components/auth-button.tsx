@@ -13,15 +13,27 @@ export function AuthButton() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      setIsAuthenticated(!!user)
+      try {
+        const { data: { user }, error } = await supabase.auth.getUser()
+        if (error) throw error
+        setIsAuthenticated(!!user)
+      } catch (error) {
+        console.error('Error checking auth status:', error)
+        setIsAuthenticated(false)
+      }
     }
     checkAuth()
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event) => {
       if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
-        const { data: { user } } = await supabase.auth.getUser()
-        setIsAuthenticated(!!user)
+        try {
+          const { data: { user }, error } = await supabase.auth.getUser()
+          if (error) throw error
+          setIsAuthenticated(!!user)
+        } catch (error) {
+          console.error('Error handling auth state change:', error)
+          setIsAuthenticated(false)
+        }
       }
     })
 
@@ -43,10 +55,10 @@ export function AuthButton() {
     try {
       await supabase.auth.signOut()
       setIsAuthenticated(false)
-      router.push('/')
       router.refresh()
     } catch (error) {
       console.error('Error signing out:', error)
+      // toast.error('Failed to sign out') // toast is not defined, consider importing or defining it
     }
   }
 

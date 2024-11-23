@@ -69,6 +69,28 @@ export function CommandSection({ initialCommands }: CommandSectionProps) {
     }
   }
 
+  const handleDelete = async (id: string) => {
+    // Optimistically remove the command
+    setCommands(prev => prev.filter(cmd => cmd.id !== id))
+    
+    try {
+      const response = await fetch(`/api/commands?id=${id}`, {
+        method: "DELETE",
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to delete command")
+      }
+
+      toast.success("Command deleted successfully")
+    } catch (error) {
+      console.error("Error deleting command:", error)
+      // Restore the command if deletion failed
+      setCommands(prev => [...prev, ...initialCommands.filter(cmd => cmd.id === id)])
+      toast.error("Failed to delete command")
+    }
+  }
+
   return (
     <>
       <div className="flex gap-4 mb-8">
@@ -77,7 +99,7 @@ export function CommandSection({ initialCommands }: CommandSectionProps) {
         </div>
         <CommandDialog onSave={handleAdd} />
       </div>
-      <CommandList commands={commands} />
+      <CommandList commands={commands} onDelete={handleDelete} />
     </>
   )
 }

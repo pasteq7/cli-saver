@@ -100,3 +100,66 @@ export async function GET() {
     )
   }
 }
+
+export async function DELETE(request: Request) {
+  const supabase = createRouteHandlerClient({ cookies })
+  
+  // Check if user is authenticated
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
+  try {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Command ID is required" },
+        { status: 400 }
+      )
+    }
+
+    // Verify the command belongs to the user before deleting
+    const { data: command } = await supabase
+      .from("commands")
+      .select("user_id")
+      .eq("id", id)
+      .single()
+
+    if (!command) {
+      return NextResponse.json(
+        { error: "Command not found" },
+        { status: 404 }
+      )
+    }
+
+    if (command.user_id !== session.user.id) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 403 }
+      )
+    }
+
+    const { error } = await supabase
+      .from("commands")
+      .delete()
+      .eq("id", id)
+
+    if (error) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 }
+      )
+    }
+
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    console.error("Error deleting command:", error)
+    return NextResponse.json(
+      { error: "Failed to delete command" },
+      { status: 500 }
+    )
+  }
+}
