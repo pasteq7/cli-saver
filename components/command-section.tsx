@@ -15,11 +15,21 @@ export function CommandSection({ initialCommands }: CommandSectionProps) {
 
   const handleSearch = (query: string) => {
     setSearchQuery(query)
-    // TODO: Implement search logic
+    if (!query.trim()) {
+      setCommands(initialCommands)
+      return
+    }
+    
+    const filtered = initialCommands.filter(command => 
+      command.command.toLowerCase().includes(query.toLowerCase()) ||
+      command.description?.toLowerCase().includes(query.toLowerCase()) ||
+      command.tags?.some(tag => tag.name.toLowerCase().includes(query.toLowerCase()))
+    )
+    setCommands(filtered)
   }
 
   const handleAdd = () => {
-    // TODO: Implement add logic
+    // TODO: Will be implemented when adding new commands
   }
 
   return (
