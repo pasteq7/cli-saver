@@ -40,9 +40,14 @@ export function AuthButton() {
   }
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    setIsAuthenticated(false)
-    router.refresh()
+    try {
+      await supabase.auth.signOut()
+      setIsAuthenticated(false)
+      router.push('/')
+      router.refresh()
+    } catch (error) {
+      console.error('Error signing out:', error)
+    }
   }
 
   if (isAuthenticated) {

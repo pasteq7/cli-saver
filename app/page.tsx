@@ -31,13 +31,7 @@ export default async function Home() {
 
   const { data: commands, error: commandsError } = await supabase
     .from('commands')
-    .select(`
-      *,
-      tags (
-        id,
-        name
-      )
-    `)
+    .select('*')
     .eq('user_id', user?.id)
     .order('created_at', { ascending: false })
 

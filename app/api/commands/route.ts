@@ -82,19 +82,20 @@ export async function GET() {
     const { data, error } = await supabase
       .from("commands")
       .select("*")
-      .eq('user_id', session.user.id)
-      .order('created_at', { ascending: false })
+      .eq("user_id", session.user.id)
+      .order("created_at", { ascending: false })
 
     if (error) {
-      console.error("Database error:", error)
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 }
+      )
     }
 
     return NextResponse.json(data)
   } catch (error) {
-    console.error("Error fetching commands:", error)
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Internal Server Error" },
       { status: 500 }
     )
   }
