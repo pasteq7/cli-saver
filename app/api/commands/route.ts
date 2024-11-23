@@ -13,7 +13,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json()
-    const { command, description } = body
+    const { command } = body
 
     if (!command || typeof command !== "string") {
       return NextResponse.json(
@@ -25,7 +25,6 @@ export async function POST(request: Request) {
     // Insert the command into the database
     console.log('Attempting to insert command:', {
       command,
-      description: description || null,
       user_id: session.user.id,
     });
     
@@ -33,7 +32,6 @@ export async function POST(request: Request) {
       .from("commands")
       .insert({
         command,
-        description: description || null,
         user_id: session.user.id,
       })
       .select()

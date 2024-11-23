@@ -20,29 +20,28 @@ export function CommandList({ commands, onDelete }: CommandListProps) {
   return (
     <div className="grid gap-4">
       {commands.map((command) => (
-        <Card key={command.id}>
+        <Card 
+          key={command.id} 
+          className="hover:bg-accent/10 hover:dark:bg-accent/20 cursor-pointer transition-colors"
+          onClick={() => copyToClipboard(command.command)}
+        >
           <CardContent className="p-4">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
-                <pre className="font-mono text-sm bg-muted p-2 rounded-md overflow-x-auto">
+                <pre className="font-mono text-sm bg-muted/50 p-2 rounded-md overflow-x-auto">
                   {command.command}
                 </pre>
               </div>
               <div className="flex gap-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => copyToClipboard(command.command)}
-                  title="Copy command"
-                >
-                  <Copy className="h-4 w-4" />
-                </Button>
                 {onDelete && (
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => onDelete(command.id)}
-                    className="text-destructive hover:text-destructive"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDelete(command.id);
+                    }}
+                    className="text-destructive hover:bg-destructive/10 hover:text-destructive"
                     title="Delete command"
                   >
                     <Trash2 className="h-4 w-4" />
