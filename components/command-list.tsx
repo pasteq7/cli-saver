@@ -2,7 +2,6 @@
 
 import { Command } from "@/lib/types"
 import { Card, CardContent } from "./ui/card"
-import { Badge } from "./ui/badge"
 import { Copy } from "lucide-react"
 import { Button } from "./ui/button"
 import { toast } from "sonner"
@@ -32,13 +31,6 @@ export function CommandList({ commands }: CommandListProps) {
                     {command.description}
                   </p>
                 )}
-                <div className="flex gap-2 mt-3">
-                  {command.tags?.map((tag) => (
-                    <Badge key={tag.id} variant="secondary">
-                      {tag.name}
-                    </Badge>
-                  ))}
-                </div>
               </div>
               <Button
                 variant="ghost"

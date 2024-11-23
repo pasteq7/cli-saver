@@ -22,8 +22,7 @@ export function CommandSection({ initialCommands }: CommandSectionProps) {
     
     const filtered = initialCommands.filter(command => 
       command.command.toLowerCase().includes(query.toLowerCase()) ||
-      command.description?.toLowerCase().includes(query.toLowerCase()) ||
-      command.tags?.some(tag => tag.name.toLowerCase().includes(query.toLowerCase()))
+      command.description?.toLowerCase().includes(query.toLowerCase())
     )
     setCommands(filtered)
   }
@@ -36,7 +35,6 @@ export function CommandSection({ initialCommands }: CommandSectionProps) {
       command: newCommand.command!,
       description: newCommand.description,
       created_at: new Date().toISOString(),
-      tags: []
     }
     
     // Optimistically update UI
