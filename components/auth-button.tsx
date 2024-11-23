@@ -14,33 +14,33 @@ export function AuthButton() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const { data: { user }, error } = await supabase.auth.getUser()
+        const { data: { session }, error } = await supabase.auth.getSession()
         if (error) throw error
-        setIsAuthenticated(!!user)
+        console.log('Current session:', session)
+        setIsAuthenticated(!!session)
       } catch (error) {
         console.error('Error checking auth status:', error)
         setIsAuthenticated(false)
       }
     }
+    
     checkAuth()
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event) => {
-      if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
-        try {
-          const { data: { user }, error } = await supabase.auth.getUser()
-          if (error) throw error
-          setIsAuthenticated(!!user)
-        } catch (error) {
-          console.error('Error handling auth state change:', error)
-          setIsAuthenticated(false)
-        }
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state changed:', event, 'Session:', session)
+      if (event === 'SIGNED_IN') {
+        setIsAuthenticated(true)
+        router.refresh()
+      } else if (event === 'SIGNED_OUT') {
+        setIsAuthenticated(false)
+        router.refresh()
       }
     })
 
     return () => {
       subscription.unsubscribe()
     }
-  }, [supabase.auth])
+  }, [router, supabase.auth])
 
   const handleSignIn = async () => {
     await supabase.auth.signInWithOAuth({
