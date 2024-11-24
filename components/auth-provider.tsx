@@ -55,7 +55,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGithub = async () => {
     try {
-      setIsLoading(true)
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
@@ -66,7 +65,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       console.error('Error signing in with Github:', error)
       toast.error('Failed to sign in with Github. Please try again.')
-    } finally {
       setIsLoading(false)
     }
   }
