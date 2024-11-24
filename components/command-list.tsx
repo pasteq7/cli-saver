@@ -2,7 +2,7 @@
 
 import { Command } from "@/lib/types"
 import { Button } from "./ui/button"
-import { Copy, Trash2, Edit } from "lucide-react"
+import { Copy, Trash2 } from "lucide-react"
 import { toast } from "sonner"
 import { formatDistanceToNow } from "date-fns"
 import { ScrollArea } from "./ui/scroll-area"
@@ -57,15 +57,6 @@ export function CommandList({ commands, onDelete }: CommandListProps) {
                   title="Copy to clipboard"
                 >
                   <Copy className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-6 w-6"
-                  onClick={() => {}} // TODO: Implement edit functionality
-                  title="Edit command"
-                >
-                  <Edit className="h-4 w-4" />
                 </Button>
                 <Button
                   variant="ghost"
