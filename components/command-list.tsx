@@ -24,14 +24,16 @@ export function CommandList({ commands, onDelete }: CommandListProps) {
       items,
       { 
         opacity: 0, 
-        y: 20,
+        y: 8,
+        scale: 0.98,
       },
       { 
         opacity: 1, 
         y: 0,
-        duration: 0.4,
-        stagger: 0.1,
-        ease: "power2.out"
+        scale: 1,
+        duration: 0.3,
+        stagger: 0.05,
+        ease: "expo.out"
       }
     )
   }, [commands])
