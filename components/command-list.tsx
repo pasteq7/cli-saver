@@ -1,57 +1,79 @@
 "use client"
 
 import { Command } from "@/lib/types"
-import { Card, CardContent } from "./ui/card"
-import { Copy, Trash2 } from "lucide-react"
 import { Button } from "./ui/button"
+import { Copy, Trash2 } from "lucide-react"
 import { toast } from "sonner"
+import { formatDistanceToNow } from "date-fns"
+import { ScrollArea } from "./ui/scroll-area"
 
 interface CommandListProps {
   commands: Command[]
-  onDelete?: (id: string) => void
+  onDelete: (id: string) => void
 }
 
 export function CommandList({ commands, onDelete }: CommandListProps) {
-  const copyToClipboard = async (text: string) => {
-    await navigator.clipboard.writeText(text)
-    toast.success("Command copied to clipboard")
+  const copyToClipboard = async (command: string) => {
+    try {
+      await navigator.clipboard.writeText(command)
+      toast.success("Command copied to clipboard")
+    } catch (error) {
+      console.error('Error copying to clipboard:', error)
+      toast.error("Failed to copy command")
+    }
+  }
+
+  if (commands.length === 0) {
+    return (
+      <div className="text-center py-8 text-muted-foreground">
+        No commands found
+      </div>
+    )
   }
 
   return (
-    <div className="grid gap-4">
-      {commands.map((command) => (
-        <Card 
-          key={command.id} 
-          className="hover:bg-accent/10 hover:dark:bg-accent/20 cursor-pointer transition-colors"
-          onClick={() => copyToClipboard(command.command)}
-        >
-          <CardContent className="p-4">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
-                <pre className="font-mono text-sm bg-muted/50 p-2 rounded-md overflow-x-auto">
-                  {command.command}
-                </pre>
-              </div>
-              <div className="flex gap-2">
-                {onDelete && (
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onDelete(command.id);
-                    }}
-                    className="text-destructive hover:bg-destructive/10 hover:text-destructive"
-                    title="Delete command"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                )}
-              </div>
+    <ScrollArea className="h-[400px] w-full rounded-md border p-4">
+      <div className="space-y-2">
+        {commands.map((command) => (
+          <div
+            key={command.id}
+            className="group flex items-center gap-2 p-2 rounded-lg hover:bg-muted/50 transition-colors"
+          >
+            <div 
+              className="flex-1 font-mono text-sm cursor-pointer hover:text-primary"
+              onClick={() => copyToClipboard(command.command)}
+              title="Click to copy"
+            >
+              {command.command}
             </div>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
+            
+            <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+                onClick={() => copyToClipboard(command.command)}
+                title="Copy to clipboard"
+              >
+                <Copy className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-destructive hover:text-destructive"
+                onClick={() => onDelete(command.id)}
+                title="Delete command"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            <div className="text-xs text-muted-foreground">
+              {formatDistanceToNow(new Date(command.created_at), { addSuffix: true })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </ScrollArea>
   )
 }

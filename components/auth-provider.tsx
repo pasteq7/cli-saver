@@ -1,10 +1,10 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import type { User } from '@supabase/auth-helpers-nextjs'
+import type { User } from '@supabase/supabase-js'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { createClient } from '@/utils/supabase/client'
 
 type AuthContextType = {
   user: User | null
@@ -16,7 +16,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const supabase = createClientComponentClient()
+  const supabase = createClient()
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -24,9 +24,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const { data: { session }, error } = await supabase.auth.getSession()
+        const { data: { user }, error } = await supabase.auth.getUser()
         if (error) throw error
-        setUser(session?.user ?? null)
+        setUser(user)
       } catch (error) {
         console.error('Error checking auth status:', error)
         toast.error('Authentication error. Please try again.')
@@ -38,7 +38,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     checkUser()
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      setUser(session?.user ?? null)
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
       if (event === 'SIGNED_IN') {
         router.refresh()
       } else if (event === 'SIGNED_OUT') {
@@ -50,7 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => {
       subscription.unsubscribe()
     }
-  }, [supabase.auth, router])
+  }, [supabase, router])
 
   const signInWithGithub = async () => {
     try {
@@ -58,13 +59,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
-          redirectTo: `${location.origin}/auth/callback`,
-        },
+          redirectTo: `${location.origin}/auth/callback`
+        }
       })
       if (error) throw error
     } catch (error) {
-      console.error('Error signing in:', error)
-      toast.error('Failed to sign in. Please try again.')
+      console.error('Error signing in with Github:', error)
+      toast.error('Failed to sign in with Github. Please try again.')
     } finally {
       setIsLoading(false)
     }
