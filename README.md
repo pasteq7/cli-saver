@@ -40,7 +40,7 @@ Please be aware of the following privacy considerations when using CLI Saver:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/cli-saver.git
+   git clone https://github.com/pasteq7/cli-saver
    cd cli-saver
    ```
 
