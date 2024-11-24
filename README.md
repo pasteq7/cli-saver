@@ -14,6 +14,18 @@ A modern web application for saving and managing your frequently used CLI comman
 
 Try it out at [https://cli-saver.vercel.app](https://cli-saver.vercel.app)
 
+## Privacy Notice
+
+Please be aware of the following privacy considerations when using CLI Saver:
+
+- Commands stored in the database are visible to database administrators
+- Avoid storing sensitive information such as:
+  - Passwords
+  - API keys
+  - Access tokens
+  - Private environment variables
+
+
 ## Tech Stack
 
 - [Next.js 15](https://nextjs.org/) - React framework
@@ -58,4 +70,3 @@ Try it out at [https://cli-saver.vercel.app](https://cli-saver.vercel.app)
    ```
 
 5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-

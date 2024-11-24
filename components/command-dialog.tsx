@@ -7,6 +7,7 @@ import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Plus } from "lucide-react"
 import { Command } from "@/lib/types"
+import { Alert } from "./ui/alert"
 
 interface CommandDialogProps {
   onSave: (command: Partial<Command>) => void
@@ -38,6 +39,13 @@ export function CommandDialog({ onSave }: CommandDialogProps) {
           <DialogTitle>Add New Command</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
+          <Alert
+            icon="info"
+            className="mb-4"
+          >
+            Note: Commands are stored unencrypted and visible to database administrators. 
+            Avoid storing sensitive information like passwords or API keys.
+          </Alert>
           <div className="space-y-2">
             <Label htmlFor="command">Command</Label>
             <Input
