@@ -17,7 +17,6 @@ interface CommandSectionProps {
 export function CommandSection({ initialCommands }: CommandSectionProps) {
   const [commands, setCommands] = useState(initialCommands)
   const [newCommand, setNewCommand] = useState("")
-  const [searchQuery, setSearchQuery] = useState("")
   const [showSearch, setShowSearch] = useState(false)
 
   useKeyboardShortcut('ctrl+k', (e) => {
@@ -39,7 +38,6 @@ export function CommandSection({ initialCommands }: CommandSectionProps) {
   })
 
   const handleSearch = (query: string) => {
-    setSearchQuery(query)
     if (!query.trim()) {
       setCommands(initialCommands)
       return
