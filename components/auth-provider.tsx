@@ -71,13 +71,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = async () => {
     try {
-      setIsLoading(true)
       const { error } = await supabase.auth.signOut()
       if (error) throw error
+      router.refresh()
+      router.push('/')
     } catch (error) {
       console.error('Error signing out:', error)
       toast.error('Failed to sign out. Please try again.')
-    } finally {
       setIsLoading(false)
     }
   }
