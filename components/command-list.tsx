@@ -47,12 +47,12 @@ export function CommandList({ commands, onDelete }: CommandListProps) {
               {command.command}
             </div>
             
-            <div className="flex items-center gap-2">
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
+            <div className="relative">
+              <div className="absolute right-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8"
+                  className="h-6 w-6"
                   onClick={() => copyToClipboard(command.command)}
                   title="Copy to clipboard"
                 >
@@ -61,7 +61,7 @@ export function CommandList({ commands, onDelete }: CommandListProps) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8"
+                  className="h-6 w-6"
                   onClick={() => {}} // TODO: Implement edit functionality
                   title="Edit command"
                 >
@@ -70,7 +70,7 @@ export function CommandList({ commands, onDelete }: CommandListProps) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 text-destructive hover:text-destructive"
+                  className="h-6 w-6 text-destructive hover:text-destructive"
                   onClick={() => onDelete(command.id)}
                   title="Delete command"
                 >
