@@ -31,8 +31,7 @@ Please be aware of the following privacy considerations when using CLI Saver:
 - [Next.js 15](https://nextjs.org/) - React framework
 - [React](https://reactjs.org/) - UI library
 - [Supabase](https://supabase.com/) - Backend and authentication
-- [Radix UI](https://www.radix-ui.com/) - UI components
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [shadcn/ui](https://ui.shadcn.com/) - UI components
 - [Lucide Icons](https://lucide.dev/) - Icons
 - [Sonner](https://sonner.emilkowal.ski/) - Toast notifications
 
