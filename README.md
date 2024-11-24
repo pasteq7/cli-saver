@@ -29,7 +29,6 @@ Please be aware of the following privacy considerations when using CLI Saver:
 ## Tech Stack
 
 - [Next.js 15](https://nextjs.org/) - React framework
-- [React](https://reactjs.org/) - UI library
 - [Supabase](https://supabase.com/) - Backend and authentication
 - [shadcn/ui](https://ui.shadcn.com/) - UI components
 - [Lucide Icons](https://lucide.dev/) - Icons
