@@ -8,7 +8,7 @@ import { toast } from "sonner"
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 import { Plus, Search } from "lucide-react"
-import { useHotkeys } from "react-hotkeys-hook"
+import { useKeyboardShortcut } from "@/hooks/use-keyboard-shortcut"
 
 interface CommandSectionProps {
   initialCommands: Command[]
@@ -20,12 +20,12 @@ export function CommandSection({ initialCommands }: CommandSectionProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [showSearch, setShowSearch] = useState(false)
 
-  useHotkeys('ctrl+k', (e) => {
+  useKeyboardShortcut('ctrl+k', (e) => {
     e.preventDefault()
     document.getElementById('command-search')?.focus()
   })
 
-  useHotkeys('ctrl+f', (e) => {
+  useKeyboardShortcut('ctrl+f', (e) => {
     e.preventDefault()
     setShowSearch(true)
     setTimeout(() => {
@@ -33,7 +33,7 @@ export function CommandSection({ initialCommands }: CommandSectionProps) {
     }, 0)
   })
 
-  useHotkeys('ctrl+n', (e) => {
+  useKeyboardShortcut('ctrl+n', (e) => {
     e.preventDefault()
     document.getElementById('new-command')?.focus()
   })
