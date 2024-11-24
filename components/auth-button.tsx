@@ -7,6 +7,8 @@ import { useAuth } from "@/components/auth-provider"
 export function AuthButton() {
   const { user, isLoading, signInWithGithub, signOut } = useAuth()
 
+  console.log('AuthButton render:', { isLoading, hasUser: !!user })
+
   if (isLoading) {
     return (
       <Button
