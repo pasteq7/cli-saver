@@ -5,8 +5,7 @@ import { Button } from "./ui/button"
 import { Copy, Trash2, Terminal } from "lucide-react"
 import { toast } from "sonner"
 import { ScrollArea } from "./ui/scroll-area"
-import { useEffect, useRef } from "react"
-import gsap from "gsap"
+import { useRef } from "react"
 
 interface CommandListProps {
   commands: Command[]
@@ -15,28 +14,6 @@ interface CommandListProps {
 
 export function CommandList({ commands, onDelete }: CommandListProps) {
   const listRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (!listRef.current) return
-
-    const items = listRef.current.children
-    gsap.fromTo(
-      items,
-      { 
-        opacity: 0, 
-        y: 8,
-        scale: 0.98,
-      },
-      { 
-        opacity: 1, 
-        y: 0,
-        scale: 1,
-        duration: 0.3,
-        stagger: 0.05,
-        ease: "expo.out"
-      }
-    )
-  }, [commands])
 
   const copyToClipboard = async (command: string) => {
     try {
@@ -63,10 +40,11 @@ export function CommandList({ commands, onDelete }: CommandListProps) {
   return (
     <ScrollArea className="h-[400px] w-full rounded-md border">
       <div ref={listRef} className="divide-y divide-border">
-        {commands.map((command) => (
+        {commands.map((command, index) => (
           <div
             key={command.id}
-            className="group relative flex items-center gap-4 p-4 hover:bg-muted/50 transition-all duration-200"
+            className="group relative flex items-center gap-4 p-4 hover:bg-muted/50 transition-all duration-200 animate-in fade-in-50"
+            style={{ animationDelay: `${index * 50}ms` }}
           >
             <div className="flex-1 min-w-0">
               <div 
