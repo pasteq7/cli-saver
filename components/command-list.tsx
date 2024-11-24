@@ -47,28 +47,28 @@ export function CommandList({ commands, onDelete }: CommandListProps) {
               {command.command}
             </div>
             
-            <div className="relative">
-              <div className="absolute right-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-6 w-6"
-                  onClick={() => copyToClipboard(command.command)}
-                  title="Copy to clipboard"
-                >
-                  <Copy className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-6 w-6 text-destructive hover:text-destructive"
-                  onClick={() => onDelete(command.id)}
-                  title="Delete command"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-              <div className="text-xs text-muted-foreground group-hover:opacity-0 transition-opacity">
+            <div className="flex items-center gap-3">
+              <Button
+                variant="secondary"
+                size="sm"
+                className="px-3"
+                onClick={() => copyToClipboard(command.command)}
+                title="Copy to clipboard"
+              >
+                <Copy className="h-4 w-4 mr-1" />
+                Copy
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
+                className="px-3"
+                onClick={() => onDelete(command.id)}
+                title="Delete command"
+              >
+                <Trash2 className="h-4 w-4 mr-1" />
+                Delete
+              </Button>
+              <div className="text-xs text-muted-foreground">
                 {formatDistanceToNow(new Date(command.created_at), { addSuffix: true })}
               </div>
             </div>
