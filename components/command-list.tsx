@@ -75,9 +75,6 @@ export function CommandList({ commands, onDelete }: CommandListProps) {
               >
                 {command.command}
               </div>
-              <div className="text-xs text-muted-foreground mt-1">
-                {formatDistanceToNow(new Date(command.created_at), { addSuffix: true })}
-              </div>
             </div>
             
             <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
