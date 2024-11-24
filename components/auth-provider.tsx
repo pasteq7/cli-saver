@@ -24,10 +24,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        console.log('Checking user auth status...')
         const { data: { user }, error } = await supabase.auth.getUser()
         if (error) throw error
-        console.log('User auth status:', user ? 'logged in' : 'not logged in')
         setUser(user)
       } catch (error) {
         console.error('Error checking auth status:', error)
@@ -40,7 +38,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     checkUser()
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('Auth state changed:', event)
       if (event === 'SIGNED_IN') {
         setUser(session?.user ?? null)
         router.refresh()
