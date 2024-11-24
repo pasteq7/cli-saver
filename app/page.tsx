@@ -4,6 +4,7 @@ import { SignIn } from "@/components/sign-in"
 import { CommandSection } from "@/components/command-section"
 import { createClient } from "@/utils/supabase/server"
 import { Inter } from 'next/font/google'
+import { InfoButton } from "@/components/info-button"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,6 +23,7 @@ export default async function Home() {
             CLI Saver
           </h1>
           <div className="flex items-center gap-2">
+            <InfoButton />
             <ThemeToggle />
             <AuthButton />
           </div>
@@ -48,6 +50,7 @@ export default async function Home() {
           CLI Saver
         </h1>
         <div className="flex items-center gap-2">
+          <InfoButton />
           <ThemeToggle />
           <AuthButton />
         </div>
