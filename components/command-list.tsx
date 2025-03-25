@@ -46,7 +46,7 @@ export function CommandList({ commands, onDelete }: CommandListProps) {
             className="group relative flex items-center gap-4 p-4 hover:bg-muted/50 transition-all duration-200 animate-in fade-in-50"
             style={{ animationDelay: `${index * 50}ms` }}
           >
-            <div className="flex-1 min-w-0 overflow-hidden">
+            <div className="flex-1 min-w-0 overflow-hidden max-w-[calc(100%-3rem)]">
               <div 
                 className="font-mono text-sm cursor-pointer truncate hover:text-primary transition-colors"
                 onClick={() => copyToClipboard(command.command)}
