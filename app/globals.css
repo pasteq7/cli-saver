@@ -88,7 +88,10 @@ body {
   }
 
   .command-text {
-    @apply font-mono text-sm px-3 py-1.5 rounded bg-muted/50 hover:bg-accent/50 transition-colors cursor-pointer;
+    @apply font-mono text-sm cursor-pointer truncate hover:text-primary transition-colors;
+    white-space: nowrap;
+    overflow: hidden;
+    textOverflow: ellipsis;
   }
 
   .gradient-heading {

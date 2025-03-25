@@ -61,7 +61,7 @@ export function CommandList({ commands, onDelete }: CommandListProps) {
               </div>
             </div>
             
-            <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
+            <div className="flex items-center gap-2 opacity-100 transition-opacity duration-200">
               <Button
                 variant="ghost"
                 size="sm"
