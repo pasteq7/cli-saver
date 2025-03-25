@@ -51,17 +51,12 @@ export function CommandList({ commands, onDelete }: CommandListProps) {
                 className="font-mono text-sm cursor-pointer truncate hover:text-primary transition-colors"
                 onClick={() => copyToClipboard(command.command)}
                 title={command.command}
-                style={{
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis'
-                }}
               >
                 {command.command}
               </div>
             </div>
             
-            <div className="flex items-center gap-2 opacity-100 transition-opacity duration-200">
+            <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
               <Button
                 variant="ghost"
                 size="sm"
